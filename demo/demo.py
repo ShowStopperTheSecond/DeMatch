@@ -94,10 +94,10 @@ def demo(opt, img1_path, img2_path):
 
     print("=======> Loading pretrained model")
     model = DeMatch(opt)
-    checkpoint = torch.load('../pretrained-model/yfcc100m/model_best.pth', map_location=torch.device('cpu'))
+    checkpoint = torch.load('../pretrained-model/yfcc100m/model_best.pth', map_location=torch.device('cuda'))
 
     model.load_state_dict(checkpoint['state_dict'])
-    # model.cuda()
+    model.cuda()
     model.eval()
 
     xs = torch.from_numpy(xs).float()
