@@ -52,7 +52,7 @@ def draw_matching(img1, img2, pt1, pt2):
 
 class ExtractSIFT(object):
     def __init__(self, num_kp, contrastThreshold=1e-5):
-        self.sift = cv2.xfeatures2d.SIFT_create(nfeatures=num_kp, contrastThreshold=contrastThreshold)
+        self.sift = cv2.SIFT_create(nfeatures=num_kp, contrastThreshold=contrastThreshold)
         self.num_kp = num_kp
     def run(self, img):
         img = img.astype(np.uint8)
@@ -94,13 +94,13 @@ def demo(opt, img1_path, img2_path):
 
     print("=======> Loading pretrained model")
     model = DeMatch(opt)
-    checkpoint = torch.load('../pretrained-model/yfcc100m/model_best.pth', map_location=torch.device('cuda'))
+    checkpoint = torch.load('../pretrained-model/yfcc100m/model_best.pth', map_location=torch.device('cpu'))
 
     model.load_state_dict(checkpoint['state_dict'])
-    model.cuda()
+    # model.cuda()
     model.eval()
 
-    xs = torch.from_numpy(xs).float().cuda()
+    xs = torch.from_numpy(xs).float()
 
     print("=======> Pruning")
     data = {}
